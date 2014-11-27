@@ -1,0 +1,6 @@
+*~
+*.o
+*.pyc
+*.so
+*.h5
+log.lammps
