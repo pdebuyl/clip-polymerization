@@ -45,5 +45,5 @@ compute 2 all reduce sum c_1
 compute 3 all reduce max c_1
 thermo_style custom time temp ke evdwl ebond pe press density c_2 c_3
 
-run		200000
+run		20000
 
