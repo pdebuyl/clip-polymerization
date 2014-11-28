@@ -19,7 +19,7 @@ mass		1 1.0
 velocity	all create 0.85 9287
 
 pair_style	lj/cut 3.
-pair_coeff	1 1 1.0 1.0 3.
+pair_coeff	1 1 1.0 1.0 1.122462048309373
 pair_modify	shift yes
 
 bond_style harmonic
