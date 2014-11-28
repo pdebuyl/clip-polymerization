@@ -1,2 +1,15 @@
+# Command line interface project - polymerization
+
+## Purpose
+
 This project is intented to be a fully reproducible computational research
 project.
+The goal is to model polymerization kinetics in Molecular Dynamics in
+ESPResSo++ and lammps.
+
+All model computations can be run through the Makefile.
+
+## Requirements
+
+- Make
+- [lammps](http://lammps.sandia.gov/)
