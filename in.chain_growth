@@ -1,0 +1,51 @@
+# 3d Lennard-Jones fluid
+# Setting are similar to http://www.cstl.nist.gov/srs/LJ_PURE/md.htm
+# The only difference is that there are more particles
+
+# Setting a 3D periodic system with lj units
+units		lj
+dimension	3
+atom_style	bond
+boundary p p p
+
+# Create the lattice on which initial atoms will be placed
+lattice		sc 0.85
+region		box_region block 0 10 0 10 0 10 
+
+create_box	4 box_region extra/special/per/atom 12 extra/bond/per/atom 2 bond/types 1
+create_atoms	1 box
+mass		* 1.0
+
+velocity	all create 0.85 9287
+
+pair_style	lj/cut 1.122462048309373
+pair_coeff	* * 1.0 1.0 1.122462048309373
+pair_modify	shift yes
+
+bond_style harmonic
+bond_coeff 1 50.0 1.2 
+
+neighbor	0.3 bin
+neigh_modify delay 0 every 1 check yes
+
+fix		1 all nvt temp 0.85 0.85 100.
+
+thermo_style custom time temp ke evdwl press vol density
+thermo		100
+
+run 10000
+
+dump hd1 all h5md 100 dump_3d.h5 position velocity force every 3
+write_dump all h5md dump_3d.h5 file_from hd1 species
+
+set atom 2 type 4
+fix fbc_init all bond/create 100 4 1 1. 1 prob 0.1 3942 iparam 1 3 jparam 1 2
+fix fbc all bond/create 100 2 1 1. 1 prob 0.1 9582 iparam 2 3 jparam 1 2
+
+compute 1 all property/atom nbonds
+compute 2 all reduce sum c_1
+compute 3 all reduce max c_1
+thermo_style custom time temp ke evdwl ebond pe press density c_2 c_3
+
+run 20000
+
