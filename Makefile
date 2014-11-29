@@ -1,6 +1,11 @@
+all: help
 
 help:
-	@echo ''
+	@echo 'command-line interface project - polymerization'
+	@echo 'List of targets'
+	@echo '    help'
+	@echo '    lammps_bond_3d'
+	@echo '    lammps_chain'
 
 lammps_bond_3d:
 	$(LMP) -i in.bond_3d
