@@ -30,7 +30,10 @@ neigh_modify delay 0 every 1 check yes
 
 fix		1 all nvt temp 0.85 0.85 100.
 
-thermo_style custom time temp ke evdwl press vol density
+compute 1 all property/atom nbonds
+compute 2 all reduce sum c_1
+compute 3 all reduce max c_1
+thermo_style custom step temp ke evdwl ebond pe press density c_2 c_3
 thermo		100
 
 run 10000
@@ -40,10 +43,6 @@ write_dump all h5md dump_3d.h5 file_from hd1 species
 
 fix fbc all bond/create 100 1 1 1. 1 prob 0.01 9582 iparam 8 1 jparam 8 1
 
-compute 1 all property/atom nbonds
-compute 2 all reduce sum c_1
-compute 3 all reduce max c_1
-thermo_style custom time temp ke evdwl ebond pe press density c_2 c_3
 
 run		20000
 
